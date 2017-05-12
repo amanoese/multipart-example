@@ -1,0 +1,29 @@
+<html>
+<head>
+<script src="./vue.min.js"></script>
+</head>
+<body>
+<div id="fileLodear">
+{{ message }}
+<hr>
+<input type="file" multiple="multiple" @change="fileSelect">
+<ul>
+  <li v-for="name in fileNames" v-text="name"></li>
+</ul>
+<div>
+<script>
+var fileLoader = new Vue({
+  el: '#fileLodear',
+  data: {
+    message: 'Hello Vue!',
+    fileNames : []
+  },
+  methods :{
+    fileSelect(e) {
+      this.fileNames = [].map.call(e.target.files,x=>x.name);
+    }
+  }
+})
+</script>
+</body>
+</html>
