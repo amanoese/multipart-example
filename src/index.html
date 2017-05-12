@@ -6,11 +6,14 @@
 <div id="fileLodear">
 {{ message }}
 <hr>
-<input type="file" multiple="multiple" @change="fileSelect">
+<form enctype="multipart/form-data" action="/postFiles" method="POST">
+<input name="files" type="file" multiple="multiple" @change="fileSelect"><br>
 <ul>
   <li v-for="name in fileNames" v-text="name"></li>
 </ul>
 <div>
+<input type="submit" value="POST!">
+</form>
 <script>
 var fileLoader = new Vue({
   el: '#fileLodear',
@@ -20,7 +23,7 @@ var fileLoader = new Vue({
   },
   methods :{
     fileSelect(e) {
-      this.fileNames = [].map.call(e.target.files,x=>x.name);
+      this.fileNames = this.fileNames.concat([].map.call(e.target.files,x=>x.name));
     }
   }
 })
