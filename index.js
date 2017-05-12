@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer')
 
 const app = express();
-const upload = multer({dest: 'uploaded'})
+const upload = multer({ dest: 'uploaded' })
 
 app.use('/',express.static('src'));
 app.get('/', function (req, res) {
@@ -10,7 +10,9 @@ app.get('/', function (req, res) {
 });
 app.post('/postFiles', upload.array('files'), function (req, res) {
   console.log(req.files);
-  res.send('Hello World!');
+  console.log(`files : ${req.files.length}`);
+  res.send(`FILE-JSON:${JSON.stringify(req.files)}`);
+  res.end();
 });
 
 app.listen(3000, function () {

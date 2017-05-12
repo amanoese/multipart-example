@@ -12,18 +12,30 @@
   <li v-for="name in fileNames" v-text="name"></li>
 </ul>
 <div>
-<input type="submit" value="POST!">
+<input type="submit" value="POST!" @click.prevent="submitClick">
 </form>
 <script>
 var fileLoader = new Vue({
   el: '#fileLodear',
   data: {
     message: 'Hello Vue!',
-    fileNames : []
+    fileNames : [],
+    fileData : []
   },
   methods :{
     fileSelect(e) {
       this.fileNames = this.fileNames.concat([].map.call(e.target.files,x=>x.name));
+      this.fileData  = this.fileData.concat([].map.call(e.target.files,x=>x));
+    },
+    submitClick(e){
+      var formData = new FormData();
+      this.fileData.forEach(file=>{
+        formData.append("files", file);
+      });
+
+      var request = new XMLHttpRequest();
+      request.open("POST", "/postFiles");
+      request.send(formData);
     }
   }
 })
